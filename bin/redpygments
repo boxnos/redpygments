@@ -34,13 +34,15 @@ inner_html = markdown open(ARGV[0]).read
 if option[:template]
   html = Slim::Template.new('template/template.slim', pretty: true).render{ inner_html }
 else
-  html = inner_html + "\n"
+  html = inner_html
 end
+
+html += "\n"
 
 if option[:output]
   File.open(option[:output], "w").write html
 else
-  puts html
+  print html
 end
 
 # vim: set ft=ruby:
