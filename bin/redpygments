@@ -1,7 +1,7 @@
 #!/bin/env ruby
-require 'bundler'
-Bundler.require
-
+require 'redcarpet'
+require 'pygments.rb'
+require 'slim'
 require 'optparse'
 
 class HTMLwithPygments < Redcarpet::Render::HTML
@@ -40,7 +40,7 @@ end
 if option[:output]
   File.open(option[:output], "w").write html
 else
-  print html
+  puts html
 end
 
 # vim: set ft=ruby:
