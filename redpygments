@@ -1,0 +1,46 @@
+#!/bin/env ruby
+require 'bundler'
+Bundler.require
+
+require 'optparse'
+
+class HTMLwithPygments < Redcarpet::Render::HTML
+  def block_code(code, language)
+    Pygments.highlight(code, lexer: language)
+  end
+end
+
+def markdown(text)
+  options = {fenced_code_blocks: true}
+  markdown = Redcarpet::Markdown.new(HTMLwithPygments, options)
+  markdown.render text
+end
+
+Version = "0.0.0.1"
+option = {
+  template: nil,
+  output: nil
+}
+opt = OptionParser.new
+
+opt.on('-s file', '--slim file', 'slim template') {|v| option[:template] = v}
+opt.on('-o file', '--output file', 'output file') {|v| option[:output] = v}
+
+opt.parse! ARGV
+
+
+inner_html = markdown open(ARGV[0]).read
+
+if option[:template]
+  html = Slim::Template.new('template/template.slim', pretty: true).render{ inner_html }
+else
+  html = inner_html + "\n"
+end
+
+if option[:output]
+  File.open(option[:output], "w").write html
+else
+  print html
+end
+
+# vim: set ft=ruby:
