@@ -32,7 +32,7 @@ $ gem uninstall redpygments
 try it.
 
 ~~~~
-$ redpygments -s template.slim awsome.md -o awsome.html
+$ redpygments -s template.slim awesome.md -o awesome.html
 ~~~~
 
 enjoy!
