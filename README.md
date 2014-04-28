@@ -1,32 +1,41 @@
-# Redpygments
+# RedPygments
 
 TODO: Write a gem description
 
 ## Installation
 
-Add this line to your application's Gemfile:
+install pygments
 
-    gem 'redpygments'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install redpygments
-
-
-### need to install pygments
-
-#### fedora
+### fedora user
 ~~~~
-% yum install python-pygments
+$ sudo yum install python-pygments
+~~~~
+
+### clone
+~~~~
+$ git clone https://github.com/boxnos/redpygments.git
+~~~~
+
+### install
+~~~~
+$ cd redpygments
+$ rake install
+~~~~
+
+### uninstall
+~~~~
+$ gem uninstall redpygments
 ~~~~
 
 ## Usage
 
-TODO: Write usage instructions here
+try it.
+
+~~~~
+$ redpygments -s template.slim awsome.md -o awsome.html
+~~~~
+
+enjoy!
 
 ## Contributing
 
