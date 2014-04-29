@@ -2,6 +2,8 @@ require "redpygments/version"
 require 'redcarpet'
 require 'pygments.rb'
 
+require 'sass'
+
 module Redpygments
   class HTMLwithPygments < Redcarpet::Render::HTML
     def block_code(code, language)
