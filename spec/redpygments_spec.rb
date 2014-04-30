@@ -40,6 +40,12 @@ describe command do
       expect(o).to eq ""
     end
   end
+
+  it "notfound.md" do
+    exec "#{command} notfound.md" do |o, s, e|
+      expect(e.success?).not_to be true
+    end
+  end
 end
 
 describe Redpygments do
