@@ -1,7 +1,5 @@
 # RedPygments
 
-TODO: Write a gem description
-
 ## Installation
 
 install pygments
