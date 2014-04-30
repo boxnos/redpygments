@@ -3,44 +3,49 @@ require 'redpygments'
 require 'optparse'
 require 'slim'
 
-option = {
+options = {
   template: nil,
   output: nil
 }
-opt = OptionParser.new
+op = OptionParser.new do |opts|
+  opts.banner = "Usage: redpygments [options] [files(markdown)]..."
 
-opt.on('-d', '--default', 'use default template') {|v| option[:template] = Redpygments::default_template}
-opt.on('-s file', '--slim file', 'slim template') {|v| option[:template] = v}
-opt.on('-o file', '--output file', 'output file') {|v| option[:output] = v}
-
-opt.parse! ARGV
-
-
-if ARGV.empty?
-  lines = ""
-  while line = gets
-    lines += line
-  end
-  inner_html = Redpygments.parse_markdown(lines)
-else
-  inner_html = ""
-  ARGV.each do |f|
-    inner_html += Redpygments.parse_markdown(open(f).read)
-  end
+  opts.on('-d', '--default', 'use default template') {|v| options[:template] = Redpygments::default_template}
+  opts.on('-s file', '--slim file', 'slim template') {|v| options[:template] = v}
+  opts.on('-o file', '--output file', 'output file') {|v| options[:output] = v}
 end
+op.parse!
 
-if option[:template]
-  html = Redpygments.parse_slim(option[:template], inner_html, pretty: true)
-else
-  html = inner_html
-end
+begin
+  if ARGV.empty?
+    lines = ""
+    while line = gets
+      lines += line
+    end
+    inner_html = Redpygments.parse_markdown(lines)
+  else
+    inner_html = ""
+    ARGV.each do |f|
+      inner_html += Redpygments.parse_markdown(open(f).read)
+    end
+  end
 
-html += "\n"
+  if options[:template]
+    html = Redpygments.parse_slim(options[:template], inner_html, pretty: true)
+  else
+    html = inner_html
+  end
 
-if option[:output]
-  File.open(option[:output], "w").write html
-else
-  print html
+  html += "\n"
+
+  if options[:output]
+    File.open(options[:output], "w").write html
+  else
+    print html
+  end
+rescue
+  STDERR.puts $!, op
+  exit 1
 end
 
 # vim: set ft=ruby:
