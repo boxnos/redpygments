@@ -2,6 +2,8 @@ require "redpygments/version"
 require 'redcarpet'
 require 'pygments.rb'
 
+require 'sass'
+
 module Redpygments
   class HTMLwithPygments < Redcarpet::Render::HTML
     def block_code(code, language)
@@ -17,5 +19,9 @@ module Redpygments
 
   def self.parse_slim(template, html, option={})
     Slim::Template.new(template, option).render{ html }
+  end
+
+  def self.default_template()
+    File.expand_path('../../template', __FILE__) + "/default.slim"
   end
 end
