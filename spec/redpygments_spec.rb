@@ -2,38 +2,41 @@ require 'spec_helper'
 require 'open3'
 
 command = "bundle exec redpygments"
-md = "spec/test.md"
+markdown = "spec/test.md"
 template = "template/default.slim"
 
 def exec(*cmd)
   yield Open3.capture3 *cmd
 end
 
+def exec_success_and(*cmd)
+  exec *cmd do |o, e, s|
+    expect(s.success?).to be true
+    yield o, e
+  end
+end
+
 describe command do
   it "not args" do
-    exec command, stdin_data: "# hello" do |o, e, s|
-      expect(s.success?).to be true
+    exec_success_and command, stdin_data: "# hello" do |o, e|
       expect(o).to eq "<h1>hello</h1>\n\n"
     end
   end
 
-  it md do
-    exec "#{command} #{md}" do |o, e, s|
-      expect(s.success?).to be true
+  it markdown do
+    exec_success_and "#{command} #{markdown}" do |o, e|
       expect(o).to match /highlight/
     end
   end
 
-  it "#{md} -s #{template}}" do
-    exec "#{command} #{md} -s #{template}" do |o, e, s|
-      expect(s.success?).to be true
+  it "#{markdown} -s #{template}}" do
+    exec_success_and "#{command} #{markdown} -s #{template}" do |o, e|
       expect(o).to match /html.*highlight/m
     end
   end
 
-  it "#{md} -d -o template/output.html" do
-    exec "#{command} #{md} -s #{template} -o template/output.html" do |o, e, s|
-      expect(s.success?).to be true
+  it "#{markdown} -d -o template/output.html" do
+    exec_success_and "#{command} #{markdown} -s #{template} -o template/output.html" do |o, e|
       expect(o).to eq ""
     end
   end
