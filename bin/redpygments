@@ -9,6 +9,7 @@ option = {
 }
 opt = OptionParser.new
 
+opt.on('-d', '--default', 'use default template') {|v| option[:template] = Redpygments::default_template}
 opt.on('-s file', '--slim file', 'slim template') {|v| option[:template] = v}
 opt.on('-o file', '--output file', 'output file') {|v| option[:output] = v}
 
