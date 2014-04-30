@@ -17,18 +17,22 @@ opt.parse! ARGV
 
 
 if ARGV.empty?
-  exit 1
+  lines = ""
+  while line = gets
+    lines += line
+  end
+  inner_html = Redpygments.parse_markdown(lines)
 else
   inner_html = ""
   ARGV.each do |f|
     inner_html += Redpygments.parse_markdown(open(f).read)
   end
+end
 
-  if option[:template]
-    html = Redpygments.parse_slim(option[:template], inner_html, pretty: true)
-  else
-    html = inner_html
-  end
+if option[:template]
+  html = Redpygments.parse_slim(option[:template], inner_html, pretty: true)
+else
+  html = inner_html
 end
 
 html += "\n"

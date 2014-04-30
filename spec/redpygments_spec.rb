@@ -11,8 +11,9 @@ end
 
 describe command do
   it "not args" do
-    exec command do |o, e, s|
-      expect(s.success?).to be false
+    exec command, stdin_data: "# hello" do |o, e, s|
+      expect(s.success?).to be true
+      expect(o).to eq "<h1>hello</h1>\n\n"
     end
   end
 
