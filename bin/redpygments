@@ -16,15 +16,19 @@ opt.on('-o file', '--output file', 'output file') {|v| option[:output] = v}
 opt.parse! ARGV
 
 
-inner_html = ""
-ARGV.each do |f|
-  inner_html += Redpygments.parse_markdown(open(f).read)
-end
-
-if option[:template]
-  html = Redpygments.parse_slim(option[:template], inner_html, pretty: true)
+if ARGV.empty?
+  exit 1
 else
-  html = inner_html
+  inner_html = ""
+  ARGV.each do |f|
+    inner_html += Redpygments.parse_markdown(open(f).read)
+  end
+
+  if option[:template]
+    html = Redpygments.parse_slim(option[:template], inner_html, pretty: true)
+  else
+    html = inner_html
+  end
 end
 
 html += "\n"
