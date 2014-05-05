@@ -1,39 +1,47 @@
 # RedPygments
 
+RedPygments is a markdown converter using Slim, RedCarpet and Pygments(.rb). It improves your markdown life.
+
+
 ## Installation
 
-install pygments
-
-### fedora user
-~~~~
-$ sudo yum install python-pygments
-~~~~
-
-### clone
+### Clone RedPygments from github
 ~~~~
 $ git clone https://github.com/boxnos/redpygments.git
 ~~~~
 
-### install
+### Install
 ~~~~
 $ cd redpygments
 $ rake install
 ~~~~
 
-### uninstall
+### Uninstall
 ~~~~
 $ gem uninstall redpygments
 ~~~~
 
+
 ## Usage
 
-try it.
+### Use default template
 
 ~~~~
+$ redpygments -d awesome.md
+~~~~
+
+### Use your template
+
+~~~
+$ redpygments -s template.slim awesome.md
+~~~
+
+### Output to file
+
+~~~
 $ redpygments -s template.slim awesome.md -o awesome.html
-~~~~
+~~~
 
-enjoy!
 
 ## Contributing
 
