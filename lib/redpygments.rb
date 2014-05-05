@@ -7,11 +7,8 @@ require 'sass'
 module Redpygments
   class HTMLwithPygments < Redcarpet::Render::HTML
     def block_code(code, language)
-      if language
-        Pygments.highlight(code, lexer: language)
-      else
-        "<pre>" + code  + "</pre>\n"
-      end
+      language ||= "text"
+      Pygments.highlight(code, lexer: language)
     end
   end
 
