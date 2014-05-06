@@ -24,9 +24,8 @@ begin
     end
     inner_html = Redpygments.parse_markdown(lines)
   else
-    inner_html = ""
-    ARGV.each do |f|
-      inner_html += Redpygments.parse_markdown(open(f).read)
+    inner_html = ARGV.inject("") do |str, file|
+      str + Redpygments.parse_markdown(open(file).read)
     end
   end
 
