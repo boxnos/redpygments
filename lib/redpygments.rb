@@ -6,6 +6,14 @@ require 'sass'
 
 module Redpygments
   class HTMLwithPygments < Redcarpet::Render::HTML
+    def list_item(text, list_type)
+      "<li>#{
+        text.gsub(/^\[(x| )\]/) do |m|
+          "<input type=\"checkbox\"#{$1 == 'x' ? " checked" : ""} disabled>"
+        end
+        }</li>"
+    end
+
     def block_code(code, language)
       language ||= "text"
       Pygments.highlight(code, lexer: language)
