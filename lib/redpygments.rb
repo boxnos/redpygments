@@ -5,7 +5,7 @@ require 'pygments.rb'
 require 'sass'
 
 module Redpygments
-  class HTMLwithPygments < Redcarpet::Render::HTML
+  class HTMLRender < Redcarpet::Render::HTML
     def list_item(text, list_type)
       "<li>#{
         text.gsub(/^\[(x| )\]/) do |m|
@@ -22,7 +22,7 @@ module Redpygments
 
   def self.parse_markdown(text)
     options = {fenced_code_blocks: true}
-    markdown = Redcarpet::Markdown.new(HTMLwithPygments, options)
+    markdown = Redcarpet::Markdown.new(HTMLRender, options)
     markdown.render text
   end
 
