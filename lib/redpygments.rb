@@ -6,6 +6,19 @@ require 'sass'
 
 module Redpygments
   class HTMLRender < Redcarpet::Render::HTML
+    def paragraph(text)
+      definition_list = /([^\n]*)\n:\s+([^\n]*(\n\s+([^\n]*))*)\n?/m
+      if definition_list
+        %Q{<dl>#{
+          text.gsub(definition_list) do |m|
+            %Q(<dt>#{$1}</dt><dd>#{$2}</dd>)
+          end
+          }<dl>}
+      else
+        %Q(<p>#{text}</p>)
+      end
+    end
+
     def list_item(text, list_type)
       "<li>#{
         text.gsub(/^\[(x| )\]/) do |m|
