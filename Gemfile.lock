@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    redpygments (0.0.0.9)
+    redpygments (0.0.1)
       pygments.rb
       redcarpet
       sass
