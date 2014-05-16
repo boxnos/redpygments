@@ -17,23 +17,25 @@ end
 op.parse!
 
 begin
-  if ARGV.empty?
-    lines = ""
-    while line = gets
-      lines += line
+  inner_html =
+    if ARGV.empty?
+      lines = ""
+      while line = gets
+        lines += line
+      end
+      Redpygments.parse_markdown(lines)
+    else
+      ARGV.inject("") do |str, file|
+        str + Redpygments.parse_markdown(open(file).read)
+      end
     end
-    inner_html = Redpygments.parse_markdown(lines)
-  else
-    inner_html = ARGV.inject("") do |str, file|
-      str + Redpygments.parse_markdown(open(file).read)
-    end
-  end
 
-  if options[:template]
-    html = Redpygments.parse_slim(options[:template], inner_html, pretty: true)
-  else
-    html = inner_html
-  end
+  html =
+    if options[:template]
+      Redpygments.parse_slim(options[:template], inner_html, pretty: true)
+    else
+      inner_html
+    end
 
   html += "\n"
 
